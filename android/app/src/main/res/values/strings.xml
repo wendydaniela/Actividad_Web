@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">DM Assistant</string>
+    <string name="title_activity_main">DM Assistant</string>
+    <string name="package_name">com.wendy.dmassistant</string>
+    <string name="custom_url_scheme">com.wendy.dmassistant</string>
+</resources>

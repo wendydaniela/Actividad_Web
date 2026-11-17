@@ -1,16 +1,19 @@
-# React + Vite
+# Dungeon Master Assistant (D&D 5e)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicación web responsiva y aplicación móvil híbrida para Android diseñada para asistir a un Dungeon Master (DM) durante sus partidas de Dungeons & Dragons 5ª Edición.
 
-Currently, two official plugins are available:
+## Enlace de Despliegue (Web)
+- **Aplicación en producción (Vercel):** [Ver aplicación web aquí](TU_ENLACE_DE_VERCEL)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Descarga para Android (.apk)
+- El archivo instalable (`.apk`) generado con Capacitor y Android Studio se encuentra disponible en la sección **[Releases (v1.0.0)](../../releases)** de este repositorio.
 
-## React Compiler
+## Módulos Principales
+1. **Bestiario y Enemigos:** Consulta en tiempo real a los monstruos oficiales de la API de D&D 5e, con buscador por nombre y visualización detallada de Clase de Armadura (AC), Puntos de Golpe (HP) y Nivel de Desafío (CR).
+2. **Generador de Loot (Botín):** Cálculo dinámico de monedas (cobre, plata, oro y platino) y obtención aleatoria de equipamiento y objetos mágicos reales de la API según el rango de Nivel de Desafío seleccionado.
+3. **Bandeja de Dados:** Simulador interactivo de lanzamientos para todos los dados estándar de D&D (`d4`, `d6`, `d8`, `d10`, `d12`, `d20` y `d100`), con detección de críticos e historial reciente.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Tecnologías Utilizadas
+- **Frontend:** React, Vite, JavaScript, Tailwind CSS
+- **Empaquetado Móvil:** CapacitorJS y Android Studio
+- **Despliegue:** Vercel
