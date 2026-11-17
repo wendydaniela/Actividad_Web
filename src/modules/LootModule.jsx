@@ -8,7 +8,6 @@ export default function LootModule() {
   const [lootResult, setLootResult] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // Cargar catálogos al montar el módulo
   useEffect(() => {
     async function loadCatalogs() {
       const [equip, magic] = await Promise.all([
@@ -25,7 +24,6 @@ export default function LootModule() {
     if (equipmentList.length === 0) return;
     setLoading(true);
 
-    // 1. Generar monedas aleatorias según el nivel de desafío
     let coins = { cp: 0, sp: 0, gp: 0, pp: 0 };
     let itemCount = 1;
     let useMagicPool = false;
@@ -39,22 +37,20 @@ export default function LootModule() {
     } else if (challengeRating === '5-10') {
       coins.sp = Math.floor(Math.random() * 200) + 50;
       coins.gp = Math.floor(Math.random() * 150) + 30;
-      itemCount = Math.floor(Math.random() * 2) + 1; // 1 a 2 objetos
-      useMagicPool = Math.random() > 0.4; // 60% probabilidad de ítem mágico
+      itemCount = Math.floor(Math.random() * 2) + 1;
+      useMagicPool = Math.random() > 0.4;
     } else if (challengeRating === '11-16') {
       coins.gp = Math.floor(Math.random() * 800) + 200;
       coins.pp = Math.floor(Math.random() * 50) + 10;
       itemCount = 2;
       useMagicPool = true;
     } else {
-      // CR 17+
       coins.gp = Math.floor(Math.random() * 3000) + 1000;
       coins.pp = Math.floor(Math.random() * 300) + 50;
       itemCount = 3;
       useMagicPool = true;
     }
 
-    // 2. Seleccionar objetos aleatorios reales de la API
     const pool = useMagicPool && magicItemsList.length > 0 ? magicItemsList : equipmentList;
     const selectedItems = [];
 
@@ -77,18 +73,16 @@ export default function LootModule() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-4">
-      <div className="mb-6">
-        <h2 className="text-2xl font-bold text-amber-400 mb-2">Generador de Loot (Botín)</h2>
-        <p className="text-sm text-slate-400">
-          Selecciona el Nivel de Desafío (CR) del encuentro para generar monedas y objetos reales de la API.
-        </p>
+    <div>
+      <div className="mb-6 border-b border-stone-800 pb-4">
+        <h2 className="text-2xl font-serif font-bold text-[#f4efe6] mb-1">Tesoro y Botín</h2>
+        <p className="text-sm text-stone-400">Calcula monedas y reliquias según el desafío del encuentro</p>
       </div>
 
       {/* Panel de Configuración */}
-      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 mb-8 shadow-xl">
-        <label className="block text-sm font-medium text-slate-300 mb-3">
-          Rango de Nivel de Desafío (Challenge Rating)
+      <div className="bg-[#1a1714] border border-stone-800 rounded-lg p-6 mb-8">
+        <label className="block text-xs font-semibold uppercase tracking-wider text-stone-400 mb-3">
+          Nivel de Desafío (CR)
         </label>
         
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
@@ -101,13 +95,15 @@ export default function LootModule() {
             <button
               key={tier.id}
               onClick={() => setChallengeRating(tier.id)}
-              className={`p-3 rounded-xl border text-left transition ${
+              className={`p-3 rounded-lg border text-left transition-colors cursor-pointer ${
                 challengeRating === tier.id
-                  ? 'bg-amber-500/15 border-amber-500 text-amber-400'
-                  : 'bg-slate-950/60 border-slate-800 text-slate-400 hover:border-slate-700'
+                  ? 'bg-red-950/40 border-red-700 text-[#f4efe6]'
+                  : 'bg-[#12100e] border-stone-800 text-stone-400 hover:border-stone-700'
               }`}
             >
-              <div className="font-bold text-sm">{tier.label}</div>
+              <div className={`font-bold text-sm ${challengeRating === tier.id ? 'text-red-400' : ''}`}>
+                {tier.label}
+              </div>
               <div className="text-xs opacity-75">{tier.desc}</div>
             </button>
           ))}
@@ -116,75 +112,75 @@ export default function LootModule() {
         <button
           onClick={generateLoot}
           disabled={loading || equipmentList.length === 0}
-          className="w-full py-3.5 px-6 bg-amber-500 hover:bg-amber-400 disabled:bg-slate-800 disabled:text-slate-500 text-slate-950 font-bold rounded-xl transition shadow-lg shadow-amber-500/10 cursor-pointer"
+          className="w-full py-3.5 px-6 bg-red-800 hover:bg-red-700 disabled:bg-stone-800 disabled:text-stone-500 text-[#f4efe6] font-semibold rounded-lg transition-colors cursor-pointer"
         >
-          {loading ? 'Generando recompensa...' : 'Generar Recompensa Aleatoria'}
+          {loading ? 'Buscandoo ...' : 'Generar Recompensa'}
         </button>
       </div>
 
       {/* Resultados del Botín */}
       {lootResult && (
-        <div className="space-y-6 animate-fade-in">
-          {/* Sección de Monedas */}
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6">
-            <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-400 mb-4">
-              Monedas Obtenidas
+        <div className="space-y-6">
+          {/* Monedas */}
+          <div className="bg-[#1a1714] border border-stone-800 rounded-lg p-6">
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-stone-400 mb-4">
+              Monedas Acuñadas
             </h3>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              <div className="bg-slate-950 p-4 rounded-xl border border-slate-800/80">
-                <span className="text-xs text-amber-700 font-bold block">COBRE (CP)</span>
-                <span className="text-2xl font-bold text-slate-200">{lootResult.coins.cp}</span>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div className="bg-[#12100e] p-4 rounded border border-stone-800">
+                <span className="text-[11px] text-stone-400 font-bold block">COBRE (CP)</span>
+                <span className="text-2xl font-serif font-bold text-[#f4efe6]">{lootResult.coins.cp}</span>
               </div>
-              <div className="bg-slate-950 p-4 rounded-xl border border-slate-800/80">
-                <span className="text-xs text-slate-400 font-bold block">PLATA (SP)</span>
-                <span className="text-2xl font-bold text-slate-200">{lootResult.coins.sp}</span>
+              <div className="bg-[#12100e] p-4 rounded border border-stone-800">
+                <span className="text-[11px] text-stone-400 font-bold block">PLATA (SP)</span>
+                <span className="text-2xl font-serif font-bold text-[#f4efe6]">{lootResult.coins.sp}</span>
               </div>
-              <div className="bg-slate-950 p-4 rounded-xl border border-amber-500/30">
-                <span className="text-xs text-amber-400 font-bold block">ORO (GP)</span>
-                <span className="text-2xl font-bold text-amber-400">{lootResult.coins.gp}</span>
+              <div className="bg-[#12100e] p-4 rounded border border-red-900/50">
+                <span className="text-[11px] text-red-400 font-bold block">ORO (GP)</span>
+                <span className="text-2xl font-serif font-bold text-[#f4efe6]">{lootResult.coins.gp}</span>
               </div>
-              <div className="bg-slate-950 p-4 rounded-xl border border-cyan-500/30">
-                <span className="text-xs text-cyan-400 font-bold block">PLATINO (PP)</span>
-                <span className="text-2xl font-bold text-cyan-300">{lootResult.coins.pp}</span>
+              <div className="bg-[#12100e] p-4 rounded border border-stone-800">
+                <span className="text-[11px] text-stone-300 font-bold block">PLATINO (PP)</span>
+                <span className="text-2xl font-serif font-bold text-[#f4efe6]">{lootResult.coins.pp}</span>
               </div>
             </div>
           </div>
 
-          {/* Sección de Objetos */}
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+          {/* Objetos */}
+          <div className="bg-[#1a1714] border border-stone-800 rounded-lg p-6">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-400">
-                Objetos Encontrados ({lootResult.items.length})
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-stone-400">
+                Objetos Hallados ({lootResult.items.length})
               </h3>
-              <span className="text-xs px-2.5 py-1 rounded bg-slate-800 text-slate-300">
-                {lootResult.isMagic ? 'Catálogo Mágico' : 'Equipamiento Estándar'}
+              <span className="text-xs px-2.5 py-0.5 rounded bg-[#12100e] border border-stone-800 text-stone-300">
+                {lootResult.isMagic ? 'Reliquias Mágicas' : 'Equipo Estándar'}
               </span>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {lootResult.items.map((item, idx) => (
-                <div key={idx} className="bg-slate-950/80 border border-slate-800 rounded-xl p-4 flex flex-col justify-between">
+                <div key={idx} className="bg-[#12100e] border border-stone-800 rounded-lg p-4 flex flex-col justify-between">
                   <div>
-                    <div className="flex justify-between items-start gap-2 mb-2">
-                      <h4 className="font-bold text-amber-400 text-base">{item.name}</h4>
+                    <div className="flex justify-between items-start gap-2 mb-1">
+                      <h4 className="font-serif font-bold text-red-400 text-base">{item.name}</h4>
                       {item.rarity?.name && (
-                        <span className="text-xs bg-purple-500/10 text-purple-300 border border-purple-500/20 px-2 py-0.5 rounded">
+                        <span className="text-[11px] bg-red-950/40 text-red-300 border border-red-900/40 px-2 py-0.5 rounded">
                           {item.rarity.name}
                         </span>
                       )}
                     </div>
-                    <p className="text-xs text-slate-400 mb-3">
+                    <p className="text-xs text-stone-400 mb-3">
                       {item.equipment_category?.name || 'Objeto Especial'}
                     </p>
                     {item.desc && item.desc.length > 0 && (
-                      <p className="text-xs text-slate-300 line-clamp-3 leading-relaxed">
+                      <p className="text-xs text-stone-300 line-clamp-3 leading-relaxed">
                         {item.desc[0]}
                       </p>
                     )}
                   </div>
                   {item.cost && (
-                    <div className="mt-3 pt-2 border-t border-slate-800/80 text-xs text-slate-400">
-                      Valor estimado: <span className="text-slate-200 font-semibold">{item.cost.quantity} {item.cost.unit}</span>
+                    <div className="mt-3 pt-2 border-t border-stone-800/80 text-xs text-stone-400">
+                      Valor: <span className="text-[#f4efe6] font-semibold">{item.cost.quantity} {item.cost.unit}</span>
                     </div>
                   )}
                 </div>

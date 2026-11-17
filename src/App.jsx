@@ -7,62 +7,49 @@ export default function App() {
   const [currentTab, setCurrentTab] = useState('bestiary');
 
   return (
-    <div className="min-h-screen bg-[#090d16] text-slate-100 flex flex-col font-sans">
+    <div className="min-h-screen bg-[#12100e] text-[#e7e2d8] flex flex-col selection:bg-red-900 selection:text-white">
       
-      {/* Barra de navegación superior */}
-      <header className="border-b border-slate-800 bg-slate-900/50 backdrop-blur sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <div className="flex items-center gap-2">
-            <h1 className="text-xl font-bold tracking-wider text-amber-400">
-              DM Assistant <span className="text-xs font-normal text-slate-400">D&D 5e</span>
+      {/* Encabezado estilo portada de manual */}
+      <header className="border-b-2 border-red-900/60 bg-[#181512] sticky top-0 z-50">
+        <div className="max-w-5xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <div>
+            <h1 className="text-2xl font-serif font-bold tracking-tight text-[#f4efe6]">
+              Dungeon Master & Dragons :p
             </h1>
           </div>
           
-          <nav className="flex gap-2 bg-slate-950 p-1.5 rounded-xl border border-slate-800 text-sm">
-            <button
-              onClick={() => setCurrentTab('bestiary')}
-              className={`px-4 py-2 rounded-lg font-medium transition cursor-pointer ${
-                currentTab === 'bestiary'
-                  ? 'bg-amber-500 text-slate-950 font-bold shadow'
-                  : 'text-slate-400 hover:text-slate-200'
-              }`}
-            >
-              Bestiario
-            </button>
-            <button
-              onClick={() => setCurrentTab('loot')}
-              className={`px-4 py-2 rounded-lg font-medium transition cursor-pointer ${
-                currentTab === 'loot'
-                  ? 'bg-amber-500 text-slate-950 font-bold shadow'
-                  : 'text-slate-400 hover:text-slate-200'
-              }`}
-            >
-              Loot / Botín
-            </button>
-            <button
-              onClick={() => setCurrentTab('dice')}
-              className={`px-4 py-2 rounded-lg font-medium transition cursor-pointer ${
-                currentTab === 'dice'
-                  ? 'bg-amber-500 text-slate-950 font-bold shadow'
-                  : 'text-slate-400 hover:text-slate-200'
-              }`}
-            >
-              Dados
-            </button>
+          <nav className="flex gap-1 border-b border-stone-800 sm:border-none w-full sm:w-auto justify-center">
+            {[
+              { id: 'bestiary', label: 'Bestiario' },
+              { id: 'loot', label: 'Tesoro y Botín' },
+              { id: 'dice', label: 'Dados' }
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setCurrentTab(tab.id)}
+                className={`px-4 py-2 text-sm font-medium transition-colors border-b-2 cursor-pointer ${
+                  currentTab === tab.id
+                    ? 'border-red-600 text-red-400 bg-red-950/20'
+                    : 'border-transparent text-stone-400 hover:text-stone-200 hover:border-stone-700'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
           </nav>
         </div>
       </header>
 
-      {/* Contenido principal según la pestaña activa */}
-      <main className="flex-1 py-6 px-4">
+      {/* Contenido principal */}
+      <main className="flex-1 py-8 px-4 max-w-5xl w-full mx-auto">
         {currentTab === 'bestiary' && <BestiaryModule />}
         {currentTab === 'loot' && <LootModule />}
         {currentTab === 'dice' && <DiceModule />}
       </main>
 
-      {/* Pie de página */}
-      <footer className="border-t border-slate-800/60 py-4 text-center text-xs text-slate-500">
-        Dungeon Master Assistant - D&D 5e Web & Mobile App
+      {/* Pie de página discreto */}
+      <footer className="border-t border-stone-800/80 py-4 px-4 text-center text-xs text-stone-500">
+        Gracias por ver :D
       </footer>
     </div>
   );
