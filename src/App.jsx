@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import BestiaryModule from './modules/BestiaryModule';
 import LootModule from './modules/LootModule';
+import DiceModule from './modules/DiceModule';
 
 export default function App() {
   const [currentTab, setCurrentTab] = useState('bestiary');
@@ -20,7 +21,7 @@ export default function App() {
           <nav className="flex gap-2 bg-slate-950 p-1.5 rounded-xl border border-slate-800 text-sm">
             <button
               onClick={() => setCurrentTab('bestiary')}
-              className={`px-4 py-2 rounded-lg font-medium transition ${
+              className={`px-4 py-2 rounded-lg font-medium transition cursor-pointer ${
                 currentTab === 'bestiary'
                   ? 'bg-amber-500 text-slate-950 font-bold shadow'
                   : 'text-slate-400 hover:text-slate-200'
@@ -30,7 +31,7 @@ export default function App() {
             </button>
             <button
               onClick={() => setCurrentTab('loot')}
-              className={`px-4 py-2 rounded-lg font-medium transition ${
+              className={`px-4 py-2 rounded-lg font-medium transition cursor-pointer ${
                 currentTab === 'loot'
                   ? 'bg-amber-500 text-slate-950 font-bold shadow'
                   : 'text-slate-400 hover:text-slate-200'
@@ -40,7 +41,7 @@ export default function App() {
             </button>
             <button
               onClick={() => setCurrentTab('dice')}
-              className={`px-4 py-2 rounded-lg font-medium transition ${
+              className={`px-4 py-2 rounded-lg font-medium transition cursor-pointer ${
                 currentTab === 'dice'
                   ? 'bg-amber-500 text-slate-950 font-bold shadow'
                   : 'text-slate-400 hover:text-slate-200'
@@ -55,15 +56,8 @@ export default function App() {
       {/* Contenido principal según la pestaña activa */}
       <main className="flex-1 py-6 px-4">
         {currentTab === 'bestiary' && <BestiaryModule />}
-        
         {currentTab === 'loot' && <LootModule />}
-
-        {currentTab === 'dice' && (
-          <div className="max-w-4xl mx-auto text-center py-20 text-slate-400">
-            <h2 className="text-2xl font-bold text-amber-400 mb-2">Bandeja de Dados (Próximamente)</h2>
-            <p className="text-sm">Aquí implementaremos el lanzador de dados interactivo (d4 a d100).</p>
-          </div>
-        )}
+        {currentTab === 'dice' && <DiceModule />}
       </main>
 
       {/* Pie de página */}
