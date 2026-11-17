@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import BestiaryModule from './modules/BestiaryModule';
+import LootModule from './modules/LootModule';
 
 export default function App() {
   const [currentTab, setCurrentTab] = useState('bestiary');
@@ -55,12 +56,7 @@ export default function App() {
       <main className="flex-1 py-6 px-4">
         {currentTab === 'bestiary' && <BestiaryModule />}
         
-        {currentTab === 'loot' && (
-          <div className="max-w-4xl mx-auto text-center py-20 text-slate-400">
-            <h2 className="text-2xl font-bold text-amber-400 mb-2">Generador de Loot (Próximamente)</h2>
-            <p className="text-sm">Aquí generaremos recompensas basadas en el nivel del monstruo.</p>
-          </div>
-        )}
+        {currentTab === 'loot' && <LootModule />}
 
         {currentTab === 'dice' && (
           <div className="max-w-4xl mx-auto text-center py-20 text-slate-400">
